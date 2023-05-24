@@ -1,0 +1,12 @@
+.navbar{
+    background-color: #f04e23;
+}
+
+.page-item.active .page-link, .orange{
+    background-color: #f04e23;
+    border-color: #f04e23;
+}
+
+.orange{
+    color: white!important;
+}

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+   <!--  <link href="/resources/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/style-min.css">
+    <link rel="stylesheet" href="/resources/css/all.min.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/vendas.css"> -->
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/vendors/bootstrap4/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/common.css">
+    <title>Hoton</title>
+  </head>
+  <body class="font-o">
+
+  <!-- Header -->
+
+<!-- Minha Conta -->
+
+
+<!-- Nav Bar -->
+
+<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+
+<div class="container " style="height:55px;">
+</div>
+<section id="notifica" style="display: none;">
+	<div id="estilo" class="alert alert-dismissible fade show" role="alert">
+	  <span id="mensagem"></span>
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+</section>
+
+<section id="titulo">
+	<div class="container-fluid bg-white" style="box-shadow:0px 5px 0px 0px rgba(0,0,0,0.01)"> 
+		<div class="container justify-content-between p-4">
+			<div class="row justify-content-between">
+				<div class="col-9 col-md-8">
+					<div class="text-uppercase">Gerenciador de Midias</div>	
+				</div>
+				<div class="col justify-content-right">
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Midia Venda</button>
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#tour">Mídia Tour</button>	
+				</div>
+			</div>
+		</div>
+  </div>
+</section>
+
+<section>
+  <div class="container table-responsive">
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Ordem</th>
+      <th scope="col">Título</th>
+      <th scope="col">Mensagem</th>
+      <th scope="col">URL</th>
+      <th scope="col" class="text-center">Ativo</th>
+      <th scope="col" class="text-center">Excluir</th>
+    </tr>
+  </thead>
+  <tbody id='linha' th:attr="data-max=${max}">
+  	<tr id='linhaCopy' style="display: none;">
+      <th scope="row" style="width: 7%">
+      	<input type="hidden" class="id-ele" value="-1">
+      	<select class="custom-select selects ordem-ele">
+      		<option value=""> -- </option>
+		    <option th:each="i: ${#numbers.sequence(0, max)}" th:value="${i}" th:text="${i}"></option>
+		</select>
+      </th>
+      <td><input class="border-0 titulo-ele" style="width: 90%;" type="text" value=""></td>
+      <td><input class="border-0 mensagem-ele" style="width: 90%;" type="text" value=""> </td>
+      <td><input class="border-0 url-ele" style="width: 90%;" type="text"value=""> </td>
+      <td class="text-center">
+	      <input type="checkbox" class="ativo-ele" value="true" aria-label="Checkbox for following text input">
+      </td>
+      <td class="text-center">
+	      <a href="#" onclick="removerMidia(-1, event)">
+	      	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-x-fill" viewBox="0 0 16 16">
+			  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM6.854 6.146 8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 1 1 .708-.708z"/>
+			</svg>
+	      </a>
+      </td>
+    </tr>
+    <tr th:each="visu : ${visuais}">
+      <th scope="row" style="width: 7%">
+      	<input type="hidden" class="id-ele" th:value="${visu.id}">
+      	<select class="custom-select selects ordem-ele">
+      		<option th:selected="${visu.ordem == null}" value=""> -- </option>
+		    <option th:selected="${i == visu.ordem}" th:each="i: ${#numbers.sequence(0, max)}" th:value="${i}" th:text="${i}"></option>
+		</select>
+      </th>
+      <td><input class="border-0 titulo-ele" style="width: 90%;" type="text" th:value="${visu.titulo}"></td>
+      <td><input class="border-0 mensagem-ele" style="width: 90%;" type="text" th:value="${visu.mensagem}"> </td>
+      <td><input class="border-0 url-ele" style="width: 90%;" type="text" th:value="${visu.path}"> </td>
+      <td class="text-center">
+	      <input type="checkbox" class="ativo-ele" aria-label="Checkbox for following text input" value='true' th:checked="${visu.ativo}">
+      </td>
+      <td class="text-center">
+	      <a href="#" th:onclick="'removerMidia('+${visu.id}+', event)'">
+	      	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-x-fill" viewBox="0 0 16 16">
+			  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM6.854 6.146 8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 1 1 .708-.708z"/>
+			</svg>
+	      </a>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+      <tr>
+        <td colspan="4"><button type="button" class="btn btn-link" onclick="addMidia()">+ Adicionar</button></td>
+        <td colspan="1">
+		  <span id="sts" class="" role="status" aria-hidden="true" style="display: none;"></span>
+		</td>
+        <td colspan="1"><button type="button" class="btn btn-link" onclick="salvar()">Salvar</button></td>
+      </tr>
+    </tfoot>
+</table>
+  </div>
+</section>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Midia Venda</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="urlVenda" class="col-form-label">URL</label>
+            <input type="hidden" class="form-control" id="urlVendaId" th:value="${vendaPathId}">
+            <input type="text" class="form-control" id="urlVenda" th:value="${vendaPath}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="salvarVenda()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="tour" tabindex="-1" aria-labelledby="tour" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="labelTour">Midia Tour</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="tourVenda" class="col-form-label">URL</label>
+            <input type="hidden" class="form-control" id="urlTourId" th:value="${tourPathId}">
+            <input type="text" class="form-control" id="urlTour" th:value="${tourPath}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="salvarTour()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/resources/js/vendors/jquery/jquery-3.5.1.min.js"></script>
+<script src="/resources/js/vendors/bootstrap4/popper.min.js"></script>
+<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+	function addMidia(){
+		$('#linha').data('max', $('#linha').data('max')+1); 
+		$('#linha').append($('#linhaCopy').clone().toggle());
+		$('.selects').each(function() {
+			  $( this ).append('<option value="'+$('#linha').data('max')+'">'+$('#linha').data('max')+'</option>');
+		});
+	}
+	
+	function removerMidia(id, event){
+		$("#sts").text("Excluindo....");
+		$("#sts").show();
+		if(id > -1){
+			$.ajax({
+			    type: 'POST',
+			    url: '/admin/gerenciar/midia/delete/'+id,
+			    success: function(data) { 
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-success");
+			    	$('#mensagem').text("Linha deletada!");
+			    	$('#notifica').show();
+			    	$(event.target).closest( "tr" ).remove();
+			    },
+			    error: function (err) {
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-danger");
+			    	$('#mensagem').text("Erro ao deletar a linha!");
+			    	$('#notifica').show();
+			    }
+			});
+		}else
+			$(event.target).closest( "tr" ).remove();
+		$("#sts").hide();
+	}
+	
+	function salvar(){
+		$("#sts").text("Salvando....");
+		$("#sts").show();
+		var lista = [];
+		var erro = false;
+		$('tbody tr').each(function() {
+			if($(this).is(":visible")){
+				var obj = {}
+				obj.id = $( this ).find('.id-ele').val();
+				obj.titulo = $( this ).find('.titulo-ele').val();
+				obj.mensagem = $( this ).find('.mensagem-ele').val();
+				obj.path = $( this ).find('.url-ele').val();
+				obj.ativo = $( this ).find('.ativo-ele').prop("checked");
+				obj.ordem = $( this ).find('.ordem-ele').val();
+				obj.type = 1;
+				if(!obj.titulo || obj.titulo == ""){
+					alert("Titulo não pode ser vazio!");
+					erro = true;
+					return false;
+				}
+				
+				if(!obj.mensagem || obj.mensagem == ""){
+					alert("Mensagem não pode ser vazio!");	
+					erro = true;
+					return false;
+				}
+				
+				if(!obj.path || obj.path == ""){
+					alert("URL não pode ser vazio!");	
+					erro = true;
+					return false;
+				}
+				lista.push(obj);
+			}
+		});
+		if(!erro){
+			$.ajax({
+			    type: 'POST',
+			    url: '/admin/gerenciar/midia/inserir',
+			    data: JSON.stringify(lista),
+			    success: function(data) { 
+			    	$('#linha tr').each(function(){
+			    	    if($(this).is(':visible')){
+			    	        $(this).remove();
+			    	    }
+			    	});
+			    	for(i = 0; i < data.length; i++){
+			    		var aux = $('#linhaCopy').clone();
+			    		
+			    		aux.find('.id-ele').val(data[i].id);
+						aux.find('.titulo-ele').val(data[i].titulo);
+			    		aux.find('.mensagem-ele').val(data[i].mensagem);
+			    		aux.find('.url-ele').val(data[i].path);
+			    		aux.find('.ativo-ele').prop("checked", data[i].ativo);
+			    		aux.find('.ordem-ele').val(data[i].ordem);
+			    		aux.toggle();
+			    		$('#linha').append(aux);
+			    	}
+			    	
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-success");
+			    	$('#mensagem').text("Dados salvos!");
+			    	$('#notifica').show();
+			    	console.log(data);
+			    },
+			    error: function (err) {
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-danger");
+			    	$('#mensagem').text("Erro ao salvar dados!");
+			    	$('#notifica').show();
+			    },
+			    contentType: "application/json"
+			});
+		}
+		$("#sts").hide();
+	}
+	function salvarVenda(){
+		var erro = false;
+		
+		var obj = {}
+		obj.id = $('#urlVendaId').val();
+		obj.path = $('#urlVenda').val();
+		obj.type = 2;
+		obj.ativo = true;
+	
+		if(!obj.path || obj.path == ""){
+			alert("URL não pode ser vazio!");	
+			erro = true;
+			return false;
+		}
+			
+		if(!erro){
+			$.ajax({
+			    type: 'POST',
+			    url: '/admin/gerenciar/midia/inserir/venda',
+			    data: JSON.stringify(obj),
+			    success: function(data) {
+			    	$('#exampleModal').modal('hide');
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-success");
+			    	$('#mensagem').text("Dados salvos!");
+			    	$('#notifica').show();
+			    	console.log(data);
+			    },
+			    error: function (err) {
+			    	$('#exampleModal').modal('hide');
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-danger");
+			    	$('#mensagem').text("Erro ao salvar dados!");
+			    	$('#notifica').show();
+			    },
+			    contentType: "application/json"
+			});
+		}
+	}
+	function salvarTour(){
+		var erro = false;
+		
+		var obj = {}
+		obj.id = $('#urlTourId').val();
+		obj.path = $('#urlTour').val();
+		obj.type = 3;
+		obj.ativo = true;
+	
+		if(!obj.path || obj.path == ""){
+			alert("URL não pode ser vazio!");	
+			erro = true;
+			return false;
+		}
+			
+		if(!erro){
+			$.ajax({
+			    type: 'POST',
+			    url: '/admin/gerenciar/midia/inserir/tour',
+			    data: JSON.stringify(obj),
+			    success: function(data) {
+			    	$('#tour').modal('hide');
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-success");
+			    	$('#mensagem').text("Dados salvos!");
+			    	$('#notifica').show();
+			    	console.log(data);
+			    },
+			    error: function (err) {
+			    	$('#tour').modal('hide');
+			    	$('#estilo').removeClass("alert-danger alert-success").addClass("alert-danger");
+			    	$('#mensagem').text("Erro ao salvar dados!");
+			    	$('#notifica').show();
+			    },
+			    contentType: "application/json"
+			});
+		}
+	}
+</script>
+<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+			<div class="row">
+				<div class="col-12 col-sm-6 pl-4 pr-4 pt-2 pb-2" th:each="sts : ${status}">
+					<div class="row shadow-sm box bg-white">
+						<div class="col f12 py-3 text-uppercase text-truncate">
+							<strong th:text="${sts[0].descricao}"></strong>
+						</div>
+
+						<div class=" col-12 dropdown-divider my-0 pt-0"></div>
+
+<!-- 						<div class="col-12 py-3 f12 text-truncate" style="height:50px;max-width:95%;margin-bottom:10px" th:text="${sts[1] == null?'':sts[1].mensagem}"></div> -->
+
+						<div class=" col-12 dropdown-divider my-0 pt-0"></div>
+
+						<div class="col-12 text-right py-2">
+							<a th:if="${sts[1] != null}" th:href="@{/admin/whatsapp/edit/{id}/{tipoVenda}(tipoVenda = ${tipoVenda}, id = ${sts[0].id})}"
+								class="text-decoration-none">
+								<img class="text-primary mr-2" src="/resources/icons/pencil.svg" width="20"
+									height="20">
+							</a>
+
+							<a th:if="${sts[1] != null && sts[2]}" th:href="@{/admin/whatsapp/desabilitar/{id}/{tipoVenda}(tipoVenda = ${tipoVenda}, id = ${sts[0].id})}"
+								class="text-decoration-none">
+								<img class="text-primary " src="/resources/icons/checked.svg" title="Ativo" width="20"
+									height="20">
+							</a>
+							<a th:if="${sts[1] == null || sts[2] == false}" th:href="@{/admin/whatsapp/habilitar/{id}/{tipoVenda}(tipoVenda = ${tipoVenda}, id = ${sts[0].id})}"
+								class="text-decoration-none">
+								<img class="text-primary " src="/resources/icons/cancel.svg" title="Inativo" width="20"
+									height="20">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<br>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

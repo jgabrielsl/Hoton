@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    <title>Hoton</title>
+    <link href="resources/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/css/fonts.css" rel="stylesheet">
+    <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/css/common.css">
+    <style type="text/css">
+    	.margem-custom-input{
+   	 		border-top-right-radius: 0px!important;
+    		border-bottom-right-radius: 0px!important;
+    		border-right: 0px!important;
+		}
+		.margem-custom-span{
+   	 		border-top-right-radius: 10rem;
+    		border-bottom-right-radius: 10rem;
+    		border-left: 0px;
+    		background-color: transparent;
+		}
+    </style>
+</head>
+  <body style="background-color:  #f04e23;">
+    <div class="container">
+    <!-- Outer Row -->
+      <div class="row justify-content-center">
+      <div class="col-12 text-center"><!-- <h1 class="h1 text-white mb-4 pt-5"><b>  hoton</b></h1> -->
+      	<img class="py-4" src="/resources/img/hoton.png" width="120">
+      </div></div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card o-hidden border-0 shadow-lg ">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col">
+                <div class="p-5">  
+                  <div class="text-center">
+                    <h1 class="h4 text-primary mb-4"><b></b></h1>
+                  </div>
+                  <form class="user" method="post" id="slogin" action="./perform_login">
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="username" aria-describedby="emailHelp" placeholder="Email" name="u">
+                    </div>
+                    <div class="form-group">
+                     <div class="input-group-append">
+                     	<input type="password" class="form-control form-control-user margem-custom-input" id="password" placeholder="Senha" name="p">
+                		<span class="input-group-text margem-custom-span" onclick="password_show_hide();">
+		                  <i class="fas fa-eye" id="show_eye"></i>
+		                  <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+		                </span>
+		              </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="remember" name="remember-me">
+                        <label class="custom-control-label" for="remember">Lembrar Senha</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-user btn-block orange">Entrar</button>
+                  </form>
+                  <hr>
+                  <form id='reset' method="post" action="/resetSenha">
+                  	<input type="hidden" value="" id='emailreset' name="email">
+                  	<a href="#" onclick="resetSenha()">Esqueci minha senha</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+  <!-- lowe case -->
+  <!-- Bootstrap core JavaScript-->
+  <script src="resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+  <script src="resources/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="resources/js/jquery.easing.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="resources/js/sb-admin-2.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      var campo = $("#username");
+      campo.keyup(function(e){
+        e.preventDefault();
+        campo.val($(this).val().toLowerCase());
+      });
+    });
+    
+    $(document).ready(function() {
+    	if(window.location.href.indexOf("error=true") >= 0)alert("Usuário e/ou senha incorreto");
+    	if(window.location.href.indexOf("reset=true") >= 0)alert("Alteração de senha concluida!\nVerifique a caixa de entrada do seu email.");
+    	if(window.location.href.indexOf("reset=false") >= 0)alert("Falha ao alterar senha!\nVerifique as informações ou tente novamente mais tarde.");
+    });
+    
+    
+    function password_show_hide() {
+    	  var x = document.getElementById("password");
+    	  var show_eye = document.getElementById("show_eye");
+    	  var hide_eye = document.getElementById("hide_eye");
+    	  hide_eye.classList.remove("d-none");
+    	  if (x.type === "password") {
+    	    x.type = "text";
+    	    show_eye.style.display = "none";
+    	    hide_eye.style.display = "block";
+    	  } else {
+    	    x.type = "password";
+    	    show_eye.style.display = "block";
+    	    hide_eye.style.display = "none";
+    	  }
+    	}
+    function resetSenha(){
+   
+    	$('#emailreset').val($('#username').val());
+    	
+    	if(!$('#emailreset').val() && $('#emailreset').val() == '') 
+    		alert('Insira um email válido!');
+    	else{
+    		$('#reset').submit();
+    	}
+    }
+   </script>
+   <th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Hoton</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="/resources/img/favicon.ico">
+	<!-- Bootstrap CSS -->
+
+	<link rel="stylesheet" href="/resources/css/vendas.css">
+	<link rel="stylesheet" href="/resources/css/style-min.css">
+	<link rel="stylesheet" href="/resources/css/common.css">
+
+<body id="mensagens" class="font-o" style="padding-top: 56px;">
+
+	<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+	
+	<section id="notifica">
+	</section>
+
+
+	<section id="tit">
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-12 pl-4 pr-4 pb-2">
+					<div class="row shadow-sm box bg-white">
+
+						<div class="col-12 font-o p-3">
+							<img class="text-primary mr-2" src="/resources/icons/chat.svg" width="20"
+								height="20"> Mensagens Cadastradas
+						</div>
+
+						<div class=" col dropdown-divider mt-0 pt-0"></div>
+
+						<div class="col-12  f12">
+							<p>Aqui você encontra todas as suas mensagens programadas.</p>
+						</div>
+
+						<div class="col-12 mb-3">
+							<a class="btn btn-success font-o" href="/admin/mensagem/edit"
+								role="button"> + Nova Mensagem</a>
+						</div>
+
+						<!-- <div class="col-12 d-flex align-items-center pt-2 pb-3">
+							<div id="link" class="d-flex align-items-center">
+								<img src="/resources/icons/youtube.svg" width="30" style="cursor:pointer;">
+								<p class="f12 p-0 m-0 ml-2" style="cursor:pointer;">Tutorial de cadastro de mensagens.
+								</p>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section>
+		<div class="container">
+			<div class="row">
+
+
+
+				<div class="col-12 col-sm-6 pl-4 pr-4 pt-2 pb-2" th:each="msg : ${mensagens}">
+					<div class="row shadow-sm box bg-white">
+
+						<div class="col font-o f12 d-flex align-items-center py-3 ">
+							<img th:if="${msg.categoria == 1}" class="mr-3" src="/resources/icons/scan.svg" width="35">
+							<img th:if="${msg.categoria != 1}" class="mr-3" src="/resources/icons/pay.svg" width="35">
+							<div class="f12 text-uppercase">CATEGORIA<br><strong th:text="${msg.categoria == '1'} ? 'Boleto' : 'Cartão de crédito'"></strong> </div>
+						</div>
+
+						<div class="col f12 py-3 text-uppercase text-truncate">
+							TÍTULO<br><strong th:text="${msg.titulo}"></strong>
+						</div>
+
+						<div class=" col-12 dropdown-divider my-0 pt-0"></div>
+
+						<div class="col-12 py-3 f12 text-truncate" style="height:50px;max-width:95%;margin-bottom:10px" th:text="${msg.mensagem}"></div>
+
+						<div class=" col-12 dropdown-divider my-0 pt-0"></div>
+
+						<div class="col-12 text-right py-2">
+							<a th:href="@{/admin/mensagem/edit/{id}(id = ${msg.id})}"
+								class="text-decoration-none">
+								<img class="text-primary mr-2" src="/resources/icons/pencil.svg" width="20"
+									height="20">
+							</a>
+
+							<a th:href="@{/admin/mensagem/excluir/{id}(id = ${msg.id})}"
+								class="text-decoration-none">
+								<img class="text-primary " src="/resources/icons/trash.svg" width="20"
+									height="20">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<br>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="/resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+	<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+
+</html>

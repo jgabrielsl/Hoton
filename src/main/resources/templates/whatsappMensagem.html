@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="shortcut icon" href="/resources/img/favicon.ico">
+	<title>Hoton</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- <link rel="stylesheet" href="/resources/css/boleto.css">-->
+	<link rel="stylesheet" href="/resources/css/style-min.css"> 
+	<link rel="stylesheet" href="/resources/css/common.css">
+</head>
+
+<body class="font-o" style="padding-top:56px;">
+	<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+	<section id="notifica">
+	</section>
+	<section>
+		<div class="container">
+			<div class="row shadow-sm box my-3 mx-1">
+				<div class="col-12 font-o p-3">
+					<img class="text-primary mr-3" src="/resources/icons/chat.svg" width="20"
+						height="20" viewbox="0 0 20 20" fill="currentColor"> Edição Mensagem Whatsapp
+				</div>
+
+				<div class=" col dropdown-divider mt-0 pt-0"></div>
+				<div class="col-12 f14">
+					<p><b>Atalhos Disponíveis:</b> <br>{{nome_do_produto}}, {{id_da_compra}}, {{forma_de_pagamento}},
+						{{status_da_compra}}, {{valor_total}}, {{link_do_boleto}}, {{linha_digitavel}},
+						{{nome_do_comprador}}, {{telefone_comprador}}</p>
+					<p>Exemplo de uso: Olá {{nome_do_comprador}}, tudo bem ?</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
+		<form action="/admin/whatsapp/edit" method="post">
+			<div class="container">
+				<div class="row my-3">
+					<div class="col-12">
+						<div class="row shadow-sm box m-1 p-2">
+							<div class="col-12 col-sm-6 mt-2">
+								<div class="form-group">
+									<label class="font-o f12" for="sel_categoria" th:text="${msg.type.descricao}"></label><br>
+									<label class="font-o f12" for="sel_categoria" th:text="${tipoPag}"></label>
+									<input type="hidden" name="tipoPagamento" id="tipoPagamento" th:value="${msg.tipoPagamento}">
+								</div>
+							</div>
+							<div class="col-12 col-sm-6 mt-2">
+								<div class="form-group">
+									<label for="dataAfter" class="font-o f12">Tempo(em minutos) para enviar após recebimento</label>
+									<input style="max-width: 20%;" th:if="${msg != null}" th:value="${msg.dataAfter == null?0:msg.dataAfter}" min="0" type="number" class="form-control font-o" id="dataAfter" name="tempo"
+										aria-describedby="tempodepois">
+									<input style="max-width: 20%;" th:if="${msg == null}" th:value="${msg.dataAfter == null?0:msg.dataAfter}" min="0" type="number" class="form-control font-o" id="dataAfter" name="tempo"
+										aria-describedby="tempodepois">
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<label for="inp_mssg" class="font-o f12">Mensagem</label>
+									<textarea th:if="${msg != null}" th:text="${msg.mensagem}" class="form-control" id="message" name="mensagem" rows="6" maxlength="1950"></textarea>
+									<textarea th:if="${msg == null}" class="form-control" id="message" name="mensagem" rows="6" maxlength="1950"></textarea>
+								</div>
+							</div>
+							<input type="hidden" th:value="${msg.type.id}" name="idType">
+							<style type="text/css">
+								.cke_textarea_inline {
+									border: 1px solid #ccc;
+									padding: 10px;
+									min-height: 150px;
+									background: #fff;
+									color: #000;
+								}
+							</style>
+							<div class="col-12 text-center text-sm-right mb-2">
+								<a class="btn btn-secondary font-o" href="javascript:history.back()"
+									role="button">Voltar</a>
+								<button type="submit" class="btn btn-primary" th:text="${msg == null}?'Cadastrar':'Atualizar'"></button>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- 				<div class="row my-3"> -->
+<!-- 					<div class="col-12"> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			</div>
+		</form>
+	</section>
+	<script src="/resources/js/vendors/jquery/jquery-3.5.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>	
+	<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+
+</html>

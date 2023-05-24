@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<title>Hoton</title>
+	<link rel="shortcut icon" href="/resources/img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="/resources/css/boleto.css">
+	<link rel="stylesheet" href="/resources/css/style-min.css">
+	<link rel="stylesheet" href="/resources/css/common.css">
+</head>
+
+<body class="font-o" style="padding-top: 56px;">
+	<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+	
+	<section id="notifica">
+	</section>
+	<section id="tit">
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-12 pl-4 pr-4 pb-2">
+					<div class="row shadow-sm box">
+						<div class="col-9 font-o p-3">
+							<img class="text-primary mr-2" src="/resources/icons/gear.svg" width="25" height="25">
+							<span id="labelSt">Status Atual: </span><strong><span id="labelStatus">Conectando com o bot Whatsapp</span></strong>
+						</div>
+						<div class=" col dropdown-divider mt-0 pt-0"></div>
+						<div class="col-12">
+							<div class="form-group">
+								<img id="leitura" class="img-fluid"/>
+							</div>
+						</div>
+						<div class="col-6 mb-3">
+						<input type="hidden" id="conf" th:value="${conf.id}">
+							<button type="submit" onclick="socket.emit('reset', $('#conf').val())" class="btn btn-success btn-sm font-o">Ler Novo QRcode</button>
+<!-- 							<button type="submit" onclick="socket.emit('status', $('#conf').val())" class="btn btn-success btn-sm font-o">Atualizar Status</button> -->
+						</div>
+						<div class="col-3 font-o p-3">
+						É necessario utilizar versão múltiplos dispositivos do whatsapp.
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="/resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+	<script src="https://cdn.socket.io/4.3.2/socket.io.min.js" integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs" crossorigin="anonymous"></script>
+	<script>
+		var lastName = "";
+		var emits = false;
+	  const socket = io("https://hoton.com.br", {
+		  path: "/wpp/socket.io",
+		  query:"sessaoId="+$('#conf').val()
+	  });
+	  /*const socket = io("localhost:3000", {
+		  path: "",
+		  query: "sessaoId=" + $('#conf').val()
+	  });*/
+	
+	  socket.emit('status', $('#conf').val());
+		var image = ''
+	  socket.on('status', function(data) {	
+		if(data === 'CONF_NAO_EXISTE'){
+			$('#labelStatus').text('Não encontrado nenhuma instância do BOT para o seu usúario.');
+			return;
+		}
+		if(data.qrcode && data.qrcode !==''){
+			if(image !== data.qrcode){
+				$('#leitura').attr("src", data.qrcode);	
+				image = data.qrcode;
+			}
+		}else
+			$('#leitura').attr("src", '');
+		$('#labelStatus').text(data.status);	  	
+		setTimeout(() => {
+			socket.emit('status', $('#conf').val());
+		}, 500);
+	  });	  
+	  
+		function aplicaMultDevice(e){
+			$.ajax({
+			    type: 'POST',
+			    url: '/admin/whatsapp/conf/'+$('#conf').val()+'/multDevice/'+e.target.value,
+			    success: function(data) {
+			    	console.log('SUCESSO');
+			    },
+			    error: function (err) {
+			    	console.log('FALHA');
+			    },
+			    contentType: "application/json"
+			});
+		}
+	</script>
+	<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+</html>

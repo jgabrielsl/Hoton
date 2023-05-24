@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    <title>Hoton - Login</title>
+    <link href="/resources/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/resources/css/fonts.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/vendas.css">
+    <link href="/resources/css/style-min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/common.css">
+</head>
+<body id="vendas" class="font-o" style="padding-top:56px;">
+
+<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+
+<section id="notifica">
+  </section>     
+
+<section>
+<form method="GET" action="/admin/boleto?plataforma=" novalidate="">
+	<div class="container">
+    <div class="row">
+      <div class="col mx-2">
+
+        <div class="row shadow-sm bg-white box mt-3 ">				
+
+          <div class="col-12 p-3 d-flex justify-content-between">
+          	<div>
+          		<img class="mr-2 mb-1" src="/resources/icons/search.svg"> Vendas
+          	</div>
+          	<div style="cursor: pointer;" onclick="document.location.reload(true);">Atualizar
+          		<img width="20px" src="/resources/icons/RESET.svg">
+          	</div>
+          </div>
+          
+          <div class=" col-12 dropdown-divider m-0 p-0"></div>
+
+          <div class="col-12 collapse" id="form">
+            <div class="row pt-2" style="background:#f04e23;">
+
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label class="f12 text-white" for="statusContato">Status de Contato</label>
+                  <select class="form-control" name="stsContato" id="statusContato">
+                    <option value="0">Todos</option>
+                    <th:block th:each="sts : ${stscontato}">
+                    	<option th:selected="${sts.key==stscontatoSelect}" th:value="${sts.key}" th:text="${sts.value}"></option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label class="f12 text-white" for="codVenda">Código da Venda</label>
+                  <input class="form-control" type="text" name="codVenda" id="codVenda" th:value="${vendaselect}">
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label class="f12 text-white" for="formaPagamento">Forma de Pagamento</label>
+                  <select class="form-control" name="formaPag" id="formaPagamento">
+                    <option value="0">Todos</option>
+                    <th:block th:each="sts : ${formaPagList}">
+                    	<option th:selected="${sts.key==formaPagListSelect}" th:value="${sts.key}" th:text="${sts.value}"></option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label class="f12 text-white" for="dataInicio">Data da Compra</label>
+                  <input class="form-control" type="date" name="dtCompra" id="dataInicio" th:value="${dataselect}">
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4">
+                <div class="form-group mb-md-0">
+                  <label class="f12 text-white" for="statusVenda">Status de Venda</label>
+                  <select class="form-control" name="stsVenda" id="statusVenda">
+                    <option value="0">Todos</option>
+                    <th:block th:each="sts : ${stsVendaList}">
+                    	<option th:selected="${sts.key==stsVendaListSelect}" th:value="${sts.key}" th:text="${sts.value}"></option>
+                    </th:block>
+                  </select>
+                </div>
+              </div>
+            
+             <div class="col-12 col-md-4">
+                <div class="form-group">
+                  <label for="nomeProduto" class="text-white f12">Produto</label>
+                  <select class="form-control" name="codProd" id="nomeProduto">
+                    <option value="">Todos</option>
+					<th:block th:each="produto : ${produtos}">
+						<option th:selected="${produto.key==produtoSelect}" th:value="${produto.key}" th:text="${produto.value}"></option>
+					</th:block>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 my-3 text-center ">
+                <button class="btn btn-success" value="" type="submit">Buscar Vendas</button>
+              </div>
+
+              <div class=" col-12 dropdown-divider m-0 p-0"></div>
+
+            </div>
+          </div>
+
+          <div class="col-12 f12 py-2 text-center">
+            <a class="text-secondary text-decoration-none" data-toggle="collapse" href="#form"><b>FILTRO PERSONALIZADO</b></a>
+          </div>      
+          
+        </div>
+
+      </div>
+    </div>
+	</div>
+	<input type="hidden" name="plataforma" th:value="${plataforma}">
+</form>
+</section>
+
+<!-- Box Boleto -->
+
+		<section>
+  			<div class="container">
+    			<div class="row mt-3">
+    				<th:block th:each="venda : ${vendas}">
+	      				<div class="col-sm-6 col-lg-4 col-xl-3">
+	        				<div class="row hbox bg-white shadow-sm flex-column box text-center ml-1 mr-1 ml-sm-n2 mr-sm-n2 mb-3">        
+	          					<a th:href="@{/admin/boleto/detalhe/{id}(id = ${venda.idVenda})}">
+	           			 			<div class="ibox d-flex flex-column justify-content-center align-items-center">
+	              						<img th:if="${venda.statusContatoId != 2 && venda.statusContatoId != 5 && venda.statusContatoId != 4 && venda.statusVendaId != 2 && venda.statusVendaId != 6}" class="mt-3" src="/resources/icons/_whatsapp.svg" width="120">
+	              						<img th:if="${venda.statusContatoId == 2 || venda.statusContatoId == 5 || venda.statusContatoId == 4 || venda.statusVendaId == 2 || venda.statusVendaId == 6}" class="mt-3" src="/resources/icons/_like.svg" width="120">
+	              						<p class="text-white f12 mt-1 py-1"><b>ENVIAR<br>MENSAGEM</b></p> 
+	            					</div>
+	          					</a>
+	          					<div class="col-12 mt-2 d-flex justify-content-around align-items-center">
+	            					<p class="f12 m-0 mr-3 text-left text-uppercase text-truncate"><b th:text="${venda.nomeComprador}"></b><br><span class="text-lowercase text-uppercase" th:text="${venda.produto}"></span></p>
+	            					<img th:if="${venda.pagamentoTipoId == 1}" src="/resources/icons/scan.svg" width="39">
+	            					<img th:if="${venda.pagamentoTipoId == 9}" src="/resources/icons/PIX.svg" width="39">
+	            					<img th:if="${venda.pagamentoTipoId != 1 && venda.pagamentoTipoId != 9}" src="/resources/icons/pay.svg" width="39">
+	          					</div>
+	          					<div class="col-12">
+	          						<img th:if="${venda.statusContatoId != 2 && venda.statusContatoId != 5 && venda.statusContatoId != 4 && venda.statusVendaId != 2 && venda.statusVendaId != 6}" class="py-4" src="/resources/icons/whatsapp.svg" width="120">
+	          						<img th:if="${venda.statusContatoId == 2 || venda.statusContatoId == 5 || venda.statusContatoId == 4 || venda.statusVendaId == 2 || venda.statusVendaId == 6}" class="py-4" src="/resources/icons/like.svg" width="120">
+	          					</div>
+	          					<div class="col-12 bg">
+	           	 					<div class="row">
+	              						<div class="col ml-2 px-2 f12 text-center text-truncate">Cód. Venda <br><strong th:text="${venda.codVenda}"></strong> </div>
+	              						<div class="col-2 d-flex align-items-center justify-content-center">
+	                  						<img th:if="${venda.plataforma == 'HOTMART' || venda.plataforma == 'HOTON'}" src="/resources/icons/hotmart.png" width="30">
+	                  						<img th:if="${venda.plataforma == 'MONETIZZE'}" src="/resources/icons/monetizze.png" width="30">
+	                  						<img th:if="${venda.plataforma == 'EDUZZ'}" src="/resources/icons/eduzz.png" width="30">
+	              						</div>
+	              						<div class="col m-0 p-0 f12">Data Compra <br>
+	                						<strong th:text="${venda.dtCompra}"></strong>
+	              						</div>
+	            					</div>
+	          					</div>
+	          					<div class="dropdown-divider"></div>
+	          					<div class="col-12">
+	            					<div class="d-flex justify-content-center align-items-center p-1 mr-4 ml-4 mb-2 ">
+	              						<div class="stt_contato mr-2 rounded-circle bg-primary"></div>
+	              						<div class="font10 font-weight-bold font-u text-uppercase"><strong th:text="${venda.statusContato}"></strong></div> 
+	            					</div>
+	          					</div>
+	        				</div>
+	      				</div>
+      				</th:block>
+					<div class="col-12 my-3 d-flex justify-content-center">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li th:if="${atual > 0}" class="page-item"><a class="page-link" th:href="${'?page=0&'+search}">«</a></li>		
+								<li th:if="${atual <= 0}" class="page-item"><a class="page-link">«</a></li>					
+								<li th:if="${atual-2>-1}" class="page-item"><a class="page-link" th:href="${'?page='+(atual-2)+'&'+search}" th:text="${atual-1}"></a></li>
+								<li th:if="${atual-1>-1}" class="page-item"><a class="page-link" th:href="${'?page='+(atual-1)+'&'+search}" th:text="${atual}"></a></li>
+								<li class="page-item active"><a class="page-link" th:href="${'?page='+atual+'&'+search}" th:text="${atual+1}"></a></li>							
+								<li th:if="${atual+1<ultima}" class="page-item"><a class="page-link" th:href="${'?page='+(atual+1)+'&'+search}" th:text="${atual+2}"></a></li>
+								<li th:if="${atual+2<ultima}" class="page-item"><a class="page-link" th:href="${'?page='+(atual+2)+'&'+search}" th:text="${atual+3}"></a></li>
+								<li th:if="${atual > 0}" class="page-item"><a class="page-link" th:href="${'?page='+(ultima-1)+'&'+search}">»</a></li>
+								<li th:if="${atual <= 0}" class="page-item"><a class="page-link">»</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</section>
+		<th:block th:replace="~{tawk :: tawk}"></th:block>
+    	<script src="/resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+    	<script src="/resources/js/popper.min.js."></script>
+    	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script> 
+	</body>
+</html>

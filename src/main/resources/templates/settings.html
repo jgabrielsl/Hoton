@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Hoton</title>
+	<link rel="shortcut icon" href="/resources/img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="/resources/css/boleto.css">
+	<link rel="stylesheet" href="/resources/css/style-min.css">
+	<link rel="stylesheet" href="/resources/css/common.css">
+</head>
+
+<body class="font-o" style="padding-top: 56px;">
+	<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+	
+	<section id="notifica">
+	</section>
+	<section id="tit">
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-12 pl-4 pr-4 pb-2">
+					<div class="row shadow-sm box">
+						<div class="col-12 font-o p-3">
+							<img class="text-primary mr-2" src="/resources/icons/gear.svg" width="25" height="25">
+							Configuração de Chaves Api
+						</div>
+						<div class=" col dropdown-divider mt-0 pt-0"></div>
+						<div class="col-12">
+							<div class="form-group">
+								<label for="my_key" class="font-o f12">Api Key - Essa é sua chave única da
+									Hoton</label>
+								<input type="text" name="my_key" id="my_key" class="form-control"
+									aria-describedby="my_key" th:value="${hotonApiKey}" disabled="">
+							</div>
+						</div>
+						<div class="col-12 mb-3">
+							<form action="/admin/api" method="post">
+								<button type="submit" class="btn btn-success btn-sm font-o">Gerar Nova Chave</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section>
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-12 col-sm-6 pl-4 pr-4 pt-2 pb-2">
+						<form action="/admin/api/hotmart" method="post">
+							<div class="row shadow-sm box ">
+								<div class="col font-o f12 d-flex align-items-center pt-3 pb-3">
+									<img class="mr-3" src="/resources/img/hotmart.png" width="35">
+									<div class="font-o font10">HOTMART: <br><strong>API</strong> </div>
+								</div>
+								<div class="col font-o f12 pt-3 pb-3">
+									Configure aqui as Chaves de api para utilização na Hotmart.
+								</div>
+								<div class=" col-12 dropdown-divider mt-0 pt-0"></div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="key_hot" class="font-o f12">Chave Única Hotmart</label>
+										<input type="text" name="token" id="key_hot" class="form-control"
+											aria-describedby="key_hot" th:value="${hotmartApiKey}">
+									</div>
+								</div>
+								<div th:if="${urlAdmin != null}" class="col-12">
+									<label for="postHotAdmin" class="font-o f12">Url PostBack para SISTEMA HOTON</label>
+									<div class="form-group d-flex">
+										<input disabled type="text" id="postHotAdmin" class="form-control mr-1"
+											th:value="${urlAdmin}"
+											aria-describedby="postHotAdmin">
+										<button type="button" onclick="copyValue('postHotAdmin')" class="btn btn-secondary btn-sm">Copiar</button>
+									</div>
+								</div>
+								<div class="col-12">
+									<label for="postHot" class="font-o f12">Url PostBack</label>
+									<div class="form-group d-flex">
+										<input disabled type="text" id="postHot" class="form-control mr-1"
+											th:value="${urlHotmart}"
+											aria-describedby="postHot">
+										<button type="button" onclick="copyValue('postHot')" class="btn btn-secondary btn-sm">Copiar</button>
+									</div>
+								</div>
+								<div class=" col-12 dropdown-divider mt-0 pt-0 mb-0	"></div>
+								<div class="col-12 text-right pt-3 pb-3">
+									<button type="submit" class="btn btn-primary font-o">Salvar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-12 col-sm-6 pl-4 pr-4 pt-2 pb-2">
+						<form action="/admin/api/monetizze" method="post">
+							<div class="row shadow-sm box ">
+								<div class="col font-o f12 d-flex align-items-center pt-3 pb-3">
+									<img class="mr-3" src="/resources/img/monetizze.png" width="35">
+									<div class="font-o font10">MONETIZZE: <br><strong>API</strong> </div>
+								</div>
+								<div class="col font-o f12 pt-3 pb-3">
+									Configure aqui as Chaves de api para utilização na Monetizze.
+								</div>
+								<div class=" col-12 dropdown-divider mt-0 pt-0"></div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="key_mon" class="font-o f12">Chave Única Monetizze</label>
+										<input type="text" name="token" id="key_mon" class="form-control"
+											aria-describedby="key_hot" th:value="${monetizzeApiKey}">
+									</div>
+								</div>
+								<div class="col-12">
+									<label for="postMon" class="font-o f12">Url PostBack</label>
+									<div class="form-group d-flex">
+										<input disabled type="text" id="postMon" class="form-control mr-1"
+											th:value="${urlMonetizze}"
+											aria-describedby="postMon">
+										<button type="button" onclick="copyValue('postMon')" class="btn btn-secondary btn-sm">Copiar</button>
+									</div>
+								</div>
+								<div class=" col-12 dropdown-divider mt-0 pt-0 mb-0	"></div>
+								<div class="col-12 text-right pt-3 pb-3">
+									<button type="submit" class="btn btn-primary font-o">Salvar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-12 col-sm-6 pl-4 pr-4 pt-2 pb-2">
+						<form action="/admin/api/eduzz" method="post">
+							<div class="row shadow-sm box ">
+								<div class="col font-o f12 d-flex align-items-center pt-3 pb-3">
+									<img class="mr-3" src="/resources/img/eduzz.png" width="35">
+									<div class="font-o font10">EDUZZ: <br><strong>API</strong> </div>
+								</div>
+								<div class="col font-o f12 pt-3 pb-3">
+									Configure aqui as Chaves de api para utilização na Eduzz.
+								</div>
+								<div class=" col-12 dropdown-divider mt-0 pt-0"></div>
+								<div class="col-12">
+									<div class="form-group">
+										<label for="key_edu" class="font-o f12">Chave Única Monetizze</label>
+										<input type="text" name="token" id="key_edu" class="form-control"
+											aria-describedby="key_edu" th:value="${eduzzApiKey}">
+									</div>
+								</div>
+								<div class="col-12">
+									<label for="postEduzz" class="font-o f12">Url PostBack</label>
+									<div class="form-group d-flex">
+										<input disabled type="text" id="postEduzz" class="form-control mr-1"
+											th:value="${urlEduzz}"
+											aria-describedby="postEduzz">
+										<button type="button" onclick="copyValue('postEduzz')" class="btn btn-secondary btn-sm">Copiar</button>
+									</div>
+								</div>
+								<div class=" col-12 dropdown-divider mt-0 pt-0 mb-0	"></div>
+								<div class="col-12 text-right pt-3 pb-3">
+									<button type="submit" class="btn btn-primary font-o">Salvar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</section>
+	<script src="/resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+
+	<script>
+		function copyValue(ele){
+			var inp = document.getElementById(ele)
+			inp.disabled = false;
+			inp.select();
+			document.execCommand('copy');
+			inp.disabled = true;
+		}
+	</script>
+	<script>
+		$('#link').click(function () {
+			var src = 'https://www.youtube.com/embed/ul5fGYpVGh0';
+			$('#myModal').modal('show');
+			$('#myModal iframe').attr('src', src);
+		}); $('#myModal button').click(function () {
+			$('#myModal iframe').removeAttr('src');
+		});
+	</script>
+	<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+</html>

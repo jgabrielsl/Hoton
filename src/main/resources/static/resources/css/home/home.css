@@ -1,0 +1,50 @@
+.box {
+   border-radius: 10px;
+}
+.hbox{
+    position: relative;
+    z-index: 1;
+}
+.ibox{
+    opacity: 0;
+    position: absolute;
+    background-image: linear-gradient(to right top, #29c44d, #29c44d, #29c44d, #29c44d, #29c44d);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    border-radius: 10px;
+}
+.ibox:hover{
+    opacity: 0.9;
+    transition: 0.3s
+}
+.ibox:active{
+    background-color: red;
+}
+
+.box-t {
+    border-radius: 10px 10px 0 0;
+ }
+ .box-b {
+    border-radius: 0 0 10px 10px;   
+ }
+
+.stt_contato{
+    width: 12px;
+    height: 12px;
+}
+.f10{
+    font-size: 10px;
+}
+.f12{
+    font-size: 12px;
+}
+.f14{
+    font-size: 14px;
+}
+.scan{
+    width: 50px;
+    margin: 10px;
+}

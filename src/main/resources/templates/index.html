@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
+    
+    <link rel="stylesheet" type="text/css" href="/resources/home/tablet/css/ipad-pro-11-1.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/home/tablet/css/styleguide.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/home/tablet/css/globals.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/home/mobile/css/iphone-12-12-pro-1.css" 
+    	media="screen and (max-width: 750px)"/>
+    <link rel="stylesheet" type="text/css" href="/resources/home/mobile/css/styleguide.css" 
+    	media="screen and (max-width: 750px)"/>
+    <link rel="stylesheet" type="text/css" href="/resources/home/mobile/css/globals.css" 
+    	media="screen and (max-width: 750px)"/>
+	<link rel="stylesheet" type="text/css" href="/resources/home/desktop/css/web-1920-1.css" 
+		media="screen and (min-width: 1801px)"/>
+    <link rel="stylesheet" type="text/css" href="/resources/home/desktop/css/styleguide.css" 
+    	media="screen and (min-width: 1801px)"/>
+    <link rel="stylesheet" type="text/css" href="/resources/home/desktop/css/globals.css" 
+    	media="screen and (min-width: 1801px)"/>
+    <title>Hoton</title>
+     <script src="resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript">
+  	var w;
+	$( document ).ready(function() {
+		w = $( window ).width();
+		
+		getPage(w);
+		
+	});
+	
+	$( window ).resize(function() {
+		var aux = $( window ).width();
+		  if( !(w <= 750 && aux <= 750) || !(w <= 1800 && aux <= 1800)){
+			  getPage(aux);
+			  w = aux;
+		  }
+	});
+	
+	function getPage(w){
+		$( "#prin" ).load( "screen?w="+w+" #main", function(){
+			$('.retngulo-70-a').hover(function() {
+		  		$(this).find('div').each(function() {
+		  			$(this).toggle();
+		  		});
+		  	});
+			$('.faq').hover(function() {
+		  		$(this).find('div').each(function() {
+		  			$(this).toggle();
+		  		});
+		  	});
+		});
+	}
+   </script>
+</head>
+  <body>
+  <section id="prin">
+  </section>
+  <script type="text/javascript">
+  	
+  	$('.retngulo-70-a').hover(function() {
+  		$('.retngulo-70-a div').each(function() {
+  			$(this).toggle();
+  		});
+  	});
+  	
+  </script>
+  <script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '457141389030058');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=457141389030058&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNZ8VPB61S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RNZ8VPB61S');
+  
+  gtag('config', 'AW-778875748');
+</script>
+<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+</html>

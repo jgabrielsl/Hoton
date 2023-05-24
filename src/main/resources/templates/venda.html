@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Hoton</title>
+	<link rel="shortcut icon" href="/resources/img/favicon.ico">
+	<meta name="theme-color" content="#557cf2">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="/resources/css/vendas.css">
+	<link rel="stylesheet" href="/resources/css/style-min.css">
+	<link rel="stylesheet" href="/resources/css/common.css">
+</head>
+<body id="one" class="font-o" style="padding-top:56px;">
+	<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+	
+	<section id="notifica">
+	</section>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col px-4">
+					<div class="row bg-white shadow-sm box my-3">
+						<div class="col">
+							<div class="row">
+								<div class="col font-o p-3">
+									<img class="text-primary mr-3" src="/resources/icons/chat.svg" width="20"
+										height="20" viewbox="0 0 20 20" fill="currentColor">Enviar Mensagem <span
+										class="f12"> ( Primeiro contato! )</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="row" style="padding:2px 5px;">
+										<div class="col rounded f12 text-white text-center text-truncate py-2"
+											style="background:#4f5261;">
+											CÓD. VENDA<br><strong th:text="${venda.codVenda}"></strong>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="row" style="padding:2px 5px;">
+										<div class="col rounded f12 text-white text-center py-2 text-truncate text-uppercase"
+											style="background:#4f5261;">
+											COMPRADOR <br><strong th:text="${venda.nomeComprador}"></strong>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="row" style="padding:2px 5px;">
+										<div class="col rounded f12 text-white py-2 text-truncate text-uppercase d-flex align-items-center justify-content-center"
+											style="background:#4f5261;">
+											<img th:if="${venda.pagamentoTipoId == 1}"class="mr-3" src="/resources/icons/scan.svg" width="35">
+											<img th:if="${venda.pagamentoTipoId == 9}"class="mr-3" src="/resources/icons/PIX.svg" width="35">
+											<img th:if="${venda.pagamentoTipoId != 1 && venda.pagamentoTipoId != 9}"class="mr-3" src="/resources/icons/pay.svg" width="35">		
+											<div class="text-white f12 text-uppercase text-truncate">FORMA DE
+												PAGAMENTO<br><strong th:text="${venda.pagamentoTipo}"></strong> </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-6 col-lg">
+									<div class="row" style="padding:2px 5px;">
+										<div class="col rounded f12 text-white text-center py-2 text-truncate text-uppercase"
+											style="background:#4f5261;">
+											<div class="text-white f12">STATUS ATENDIMENTO</div>
+											<div class="d-flex align-items-center justify-content-center">
+												<div class="stt_contato mr-2 rounded-circle bg-primary"></div>
+												<div
+													class="f12 font-weight-bold text-white text-uppercase text-truncate">
+													<strong th:text="${venda.statusContato}"></strong>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-6 col-lg">
+									<div class="row" style="padding:2px 5px;">
+										<div class="col rounded f12 text-white text-center py-2 text-truncate text-uppercase"
+											style="background:#4f5261;">
+											<div class="text-white f12">STATUS DA VENDA</div>
+											<div class="d-flex align-items-center justify-content-center">
+												<div class="stt_contato mr-2 rounded-circle bg-primary"></div>
+												<div
+													class="f12 font-weight-bold text-white text-uppercase text-truncate">
+													<strong th:text="${venda.statusVenda}"></strong>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-12 col-sm-6">
+									<div class="form-group">
+										<label for="telefone" class="f12 ">Número WhatsApp</label>
+										<input type="text" class="form-control" id="telefone" name="telefone"
+											aria-describedby="telHelp" th:value="${venda.numComprador}">
+									</div>
+								</div>
+								<div class="col-12 col-sm-6">
+									<div class="form-group">
+										<label class="font-o f12" for="select_msg">Escolha qual mensagem
+											utilizar</label>
+										<select class="form-control " id="select_msg" name="select_msg"
+											onchange="showMsg(this.value)">
+											<option value="0">Selecione a mensagem</option>
+											<th:block th:each="msg : ${mensagens}">
+												<option th:value="${msg.id}" th:text="${msg.titulo}"></option>
+											</th:block>
+										</select>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="form-group ">
+										<label for="text_msg" class="f12">Mensagem</label>
+										<textarea class="form-control" name="text_msg" id="textMsg0"
+												rows="6"></textarea>
+										<th:block th:each="msg : ${mensagens}">
+											<textarea style="display: none;" class="form-control" name="text_msg" th:id="${'textMsg'+msg.id}"
+												rows="6" th:text="${msg.mensagem}"></textarea>
+										</th:block>
+									</div>
+								</div>
+								<div class="col-12 mb-2">
+									<button onclick="zapWeb()" class="btn btn-info mb-1 d-none d-md-inline">Whatsapp
+										Web</button>
+									<button onclick="zapApp()" class="btn btn-success mb-1">Whatsapp Mobile/App</button>
+									<button onclick="window.history.go(-1);"
+										class="btn btn-outline-secondary mb-1">Voltar</button>
+								</div>
+								<input type="hidden" id="vendaCod" th:value="${venda.idVenda}">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="/resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+	<script>
+		function zapWeb() {
+			var sele = $('#select_msg').val();
+			var msg = document.getElementById('textMsg'+sele).value
+			msg = window.encodeURIComponent(msg);
+			var tel = document.getElementById('telefone').value										
+			window.open('https://web.whatsapp.com/send?phone=' + tel + '&text=' + msg); 
+			window.location.href = "/admin/boleto/detalhe/"+$('#vendaCod').val()+"/contato";
+		} 
+		function zapApp() {
+			var msg = document.getElementById('textMsg'+$('#select_msg').val()).value
+			msg = window.encodeURIComponent(msg);
+			var tel = document.getElementById('telefone').value										
+			window.open('https://api.whatsapp.com/send?phone=' + tel + '&text=' + msg); 
+			window.location.href = "/admin/boleto/detalhe/"+$('#vendaCod').val()+"/contato";
+		}
+		
+		function showMsg(id){
+			$('textarea[name="text_msg"]').each(function(index, elem) {
+				if($(elem).attr('id') == 'textMsg'+id)//$('#select_msg').val()
+					$(elem).show();
+				else
+					$(elem).hide();
+			});
+		}
+	</script>
+	<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+</html>

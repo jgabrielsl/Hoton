@@ -1,0 +1,60 @@
+chave_unica 				: a33832c7f32d5eaf63171db799925c12
+produto[codigo] 			: 42
+produto[nome] 				: X-Wing
+produto[chave] 				: b1a4e746c913ac058575403c6408622b
+tipoPostback[codigo] 		: 2
+tipoPostback[descricao] 	: Produtor
+venda[codigo] 				: 1
+venda[dataInicio] 			: 2021-07-08 01:29:58
+venda[dataFinalizada] 		: 2021-07-08 01:29:58
+venda[meioPagamento] 		: Monetizze
+venda[formaPagamento] 		: Boleto
+venda[garantiaRestante] 	: 7
+venda[status] 				: Finalizada
+				: 197.00
+venda[quantidade] 			: 1
+venda[tipo_frete] 			: 1
+venda[frete] 				: 15.00
+venda[valorRecebido] 		: 150.00
+venda[plano] 				: 
+venda[cupom] 				: 
+venda[linkBoleto] 			: 
+venda[linha_digitavel] 		: 
+venda[src] 					: Origem
+venda[onebuyclick] 			: 
+venda[venda_upsell] 		: 
+comissoes[0][nome] 			: Afiliado
+comissoes[0][tipo_comissao] : Último Clique
+comissoes[0][valor] 		: 27.50
+comissoes[0][porcentagem] 	: 15.50
+comissoes[0][email] 		: email@doAfiliado.com.br
+comprador[nome] 			: Comprador Teste
+comprador[email] 			: teste@teste.com.br
+comprador[data_nascimento] 	: 1990-01-01
+comprador[cnpj_cpf] 		: 111.111.111-11
+comprador[telefone] 		: (11) 1111-1111
+comprador[cep] 				: 11111-111
+comprador[endereco] 		: Rua Sem fim
+comprador[numero] 			: 42
+comprador[complemento] 		: casa 7
+comprador[bairro] 			: Esperança
+comprador[cidade] 			: Terra do nunca
+comprador[estado] 			: AA
+comprador[pais] 			: Maravilha
+#########################HEADER#######################
+host : hoton.herokuapp.com
+connection : close
+user-agent : Monetizze Postback
+accept : */*
+x-newrelic-id : VQUDVVJRDxACV1haBQYBVQ==
+x-newrelic-transaction : PxRVVlNWXVIIBVRaAVJTVVwDFB8EBw8RVU4aAA8NAVdSXVhUCVdQBlcOBUNKQQ4LCFwCWwIDFTs=
+content-type : application/x-www-form-urlencoded
+x-request-id : e7a4135e-6a96-4b5b-8210-16e5d37378ed
+x-forwarded-for : 54.147.69.86
+x-forwarded-proto : http
+x-forwarded-port : 80
+via : 1.1 vegur
+connect-time : 0
+x-request-start : 1625718598180
+total-route-time : 0
+content-length : 1198

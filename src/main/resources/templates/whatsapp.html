@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Hoton</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" href="/resources/img/favicon.ico">
+	<!-- Bootstrap CSS -->
+
+	<link rel="stylesheet" href="/resources/css/vendas.css">
+	<link rel="stylesheet" href="/resources/css/style-min.css">
+	<link rel="stylesheet" href="/resources/css/common.css">
+
+<body id="mensagens" class="font-o" style="padding-top: 56px;">
+
+	<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+	
+	<section id="notifica">
+	</section>
+
+
+	<section id="tit">
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-12 pl-4 pr-4 pb-2">
+					<div class="row shadow-sm box bg-white">
+						<div class="col-12 font-o p-3">
+							<img class="text-primary mr-2" src="/resources/icons/chat.svg" width="20"
+								height="20"> Gerenciamento de mensagens Whatsapp
+						</div>
+
+						<div class=" col dropdown-divider mt-0 pt-0"></div>
+
+						<div class="col-12  f12">
+							<p>Aqui você encontra as mensagens programadas para cada status de venda.</p>
+						</div>
+						<div class="col-6 mb-3">
+							<a class="btn btn-success font-o" href="/admin/whatsapp/qrcode"
+								role="button">Configurar QRcode</a>
+						</div>
+						<div class="col-6 mb-3">
+							<select onchange="mudaMensagens()" class="form-control font-o" id="tipo_pagamento" name="tipoPagamento">
+									<option th:value="${boleto.getId()}" selected="selected" th:text="${boleto.getDesc()}"></option>
+									<option th:value="${pix.getId()}" th:text="${pix.getDesc()}"></option>
+									<option th:value="${cartaoCredito.getId()}" th:text="${cartaoCredito.getDesc()}"></option>
+								</select>
+						</div>
+
+						<!-- <div class="col-12 d-flex align-items-center pt-2 pb-3">
+							<div id="link" class="d-flex align-items-center">
+								<img src="/resources/icons/youtube.svg" width="30" style="cursor:pointer;">
+								<p class="f12 p-0 m-0 ml-2" style="cursor:pointer;">Tutorial de cadastro de mensagens.
+								</p>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="last" th:value="${last}">
+	</section>
+
+
+	<section id="status">
+		
+	</section>
+			
+	<script src="/resources/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			console.log($('#last').val());
+			if($('#last').val() && $('#last').val()!== '')
+				$("#tipo_pagamento").val($('#last').val());
+			mudaMensagens();
+		});
+		function mudaMensagens(){
+			$('#status').empty();
+			$("#status").load( "/admin/whatsapp/content/"+$("#tipo_pagamento").val()+" .container" );
+		}
+	</script>
+	<th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+
+</html>

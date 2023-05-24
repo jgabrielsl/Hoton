@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html style="" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>Hoton</title>
+  <link rel="shortcut icon" href="/resources/img/favicon.ico">
+
+  <link rel="stylesheet" href="/resources/css/vendas.css">
+	<link rel="stylesheet" href="/resources/css/style-min.css">
+	<link rel="stylesheet" href="/resources/css/common.css">
+
+
+</head>
+<body id="mensagens" class="font-o" style="padding-top: 56px;">
+<div th:replace="~{header :: NavBar(nome=${nome}, email=${email})}"></div>
+<section id="tit">
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-12 pl-4 pr-4 pb-2">
+					<div class="row shadow-sm box bg-white">
+						<div class="col-12 font-o p-3">
+							<img class="text-primary mr-2" src="/resources/icons/chat.svg" width="20"
+								height="20"> Disparo de mensagens Whatsapp
+						</div>
+
+						<div class=" col-12 dropdown-divider mt-0 pt-0"></div>
+
+						<div class="col-10  f12">
+							<p>Configure disparos em massas para o impulsionar suas vendas. Gere uma tabela modelo, preencha, defina o horario de disparo e faça o upload.</p>
+						</div>
+						<div class="col-2 mb-3">
+							<a class="btn btn-success font-o" href="/admin/whatsapp/qrcode"
+								role="button">Download</a>
+							<a class="btn btn-success font-o" href="/admin/whatsapp/qrcode"
+								role="button">Upload</a>
+						</div>
+<!-- 						<div class="col-6 mb-3"> -->
+<!-- 							<select onchange="mudaMensagens()" class="form-control font-o" id="tipo_pagamento" name="tipoPagamento"> -->
+<!-- 									<option th:value="${boleto.getId()}" selected="selected" th:text="${boleto.getDesc()}"></option> -->
+<!-- 									<option th:value="${pix.getId()}" th:text="${pix.getDesc()}"></option> -->
+<!-- 									<option th:value="${cartaoCredito.getId()}" th:text="${cartaoCredito.getDesc()}"></option> -->
+<!-- 								</select> -->
+<!-- 						</div> -->
+
+						<!-- <div class="col-12 d-flex align-items-center pt-2 pb-3">
+							<div id="link" class="d-flex align-items-center">
+								<img src="/resources/icons/youtube.svg" width="30" style="cursor:pointer;">
+								<p class="f12 p-0 m-0 ml-2" style="cursor:pointer;">Tutorial de cadastro de mensagens.
+								</p>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- 		<input type="hidden" id="last" th:value="${last}"> -->
+	</section>
+
+
+<section>
+	 <div class="container table-responsive">
+    <table class="table table-hover">
+	  <thead>
+	    <tr>
+	      <th scope="col">Ordem</th>
+	      <th scope="col">Título</th>
+	      <th scope="col">Mensagem</th>
+	      <th scope="col">URL</th>
+	      <th scope="col" class="text-center">Ativo</th>
+	      <th scope="col" class="text-center">Excluir</th>
+	    </tr>
+	  </thead>
+  <tbody id='linha'>
+  	<tr id='linhaCopy' style="display: none;">
+      <th scope="row" style="width: 7%">
+      	<input type="hidden" class="id-ele" value="-1">
+      </th>
+      <td><input class="border-0 titulo-ele" style="width: 90%;" type="text" value=""></td>
+      <td><input class="border-0 mensagem-ele" style="width: 90%;" type="text" value=""> </td>
+      <td><input class="border-0 url-ele" style="width: 90%;" type="text"value=""> </td>
+      <td class="text-center">
+	      <input type="checkbox" class="ativo-ele" value="true" aria-label="Checkbox for following text input">
+      </td>
+      <td class="text-center">
+	      <a href="#" onclick="removerMidia(-1, event)">
+	      	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-x-fill" viewBox="0 0 16 16">
+			  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM6.854 6.146 8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 1 1 .708-.708z"/>
+			</svg>
+	      </a>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row" style="width: 7%">
+      	<input type="hidden" class="id-ele">
+      </th>
+      <td><input class="border-0 titulo-ele" style="width: 90%;" type="text" ></td>
+      <td><input class="border-0 mensagem-ele" style="width: 90%;" type="text"> </td>
+      <td><input class="border-0 url-ele" style="width: 90%;" type="text"> </td>
+      <td class="text-center">
+	      <input type="checkbox" class="ativo-ele" aria-label="Checkbox for following text input" value='true'>
+      </td>
+      <td class="text-center">
+	      <a href="#">
+	      	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-x-fill" viewBox="0 0 16 16">
+			  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM6.854 6.146 8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 1 1 .708-.708z"/>
+			</svg>
+	      </a>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+      <tr>
+        <td colspan="4"><button type="button" class="btn btn-link">+ Adicionar</button></td>
+        <td colspan="1">
+		  <span id="sts" class="" role="status" aria-hidden="true" style="display: none;"></span>
+		</td>
+        <td colspan="1"><button type="button" class="btn btn-link">Salvar</button></td>
+      </tr>
+    </tfoot>
+</table>
+</section>
+
+  
+
+  <script src="/resources/js/vendors/jquery/jquery-3.5.1.min.js"></script>
+  <script src="/resources/js/popper.min.js"></script>
+  <script src="/resources/js/vendors/bootstrap4/bootstrap.min.js"></script>
+  <script type="text/javascript">
+  
+  </script>
+  <th:block th:replace="~{tawk :: tawk}"></th:block>
+</body>
+
+</html>

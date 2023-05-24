@@ -1,0 +1,16 @@
+.box {
+   border-radius: 10px;;
+   background-color: white;
+}
+.stt_contato{
+    width: 12px;
+    height: 12px;
+    background-color: rgb(255, 174, 0);
+}
+.f12{
+    font-size: 12px;
+}
+.scan{
+    color: red;
+    width: 85px;
+}

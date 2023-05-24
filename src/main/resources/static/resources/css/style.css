@@ -1,0 +1,59 @@
+.style1 {
+    font-size: 12px
+}
+.style2 {
+    font-size: 7px
+}
+@media (min-width: 1200px) {
+.style3 {
+        height: 30px
+    }
+}
+.style4 {
+    line-height: 16px;
+    font-weight: bold
+}
+.search-box{
+    /* background-color: white; */
+    height: 84px;
+    width: 100%;
+    /* box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.2); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .search-bar{
+    background: #e7e7e8;
+    border: 3px solid white;
+    width: 95%;
+    height: 54px;
+    border-radius: 100px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+.myselect{
+    background: none;
+    padding: 10px 10px 10px 0;
+    border: none;
+  }
+  .myselect:focus{
+    outline: none;
+  }
+  .myinput{
+    
+    background: none;
+    border: none;
+    padding: 5px 5px;
+    flex-grow: 1;
+  }
+  .myinput:focus{
+    outline: none;
+  }
+  .div-bar{
+    background-color: rgb(255 255 255 / 35%);
+    width: 1px;
+    height: 20px;
+    margin: 0 20px;;
+  }
